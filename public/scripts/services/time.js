@@ -11,7 +11,11 @@
         function time($resource) {
 
             // ngResource call to our static data
-            var Time = $resource('data/time.json');
+            var Time = $resource('api/time/:id', {}, {
+                update: {
+                    method: 'PUT'
+                }
+            });
 
             function getTime() {
                 // $promise.then allows us to intercept the results
