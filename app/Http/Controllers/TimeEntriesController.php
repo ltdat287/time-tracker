@@ -42,8 +42,6 @@ class TimeEntriesController extends Controller
     {
         $data = $request->all();
 
-        dd($data);
-
         $time_entries = new TimeEntries();
 
         $time_entries->fill($data);
@@ -82,7 +80,14 @@ class TimeEntriesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        // Grab all data passed into the request and fill the database record with the new data
+        $time_entry = TimeEntries::find($id);
+        
+        $data = $request->all();
+        
+        $time_entry->fill($data);
+        
+        $time_entry->save();
     }
 
     /**
@@ -93,6 +98,8 @@ class TimeEntriesController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $time_entry = TimeEntries::find($id);
+        
+        $time_entry->delete();
     }
 }

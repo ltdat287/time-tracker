@@ -64,19 +64,63 @@
                     return;
                 }
 
-                vm.timeentries.push({
-                    "user_id":1,
-                    "user_firstname":"Ryan",
-                    "uer_lastname":"Chenkie",
+                // Call method saveTime on the time service to save the new time entry to the database
+                time.saveTime({
+                    "user_id":vm.timeEntryUser.id,
                     "start_time":vm.clockIn,
                     "end_time":vm.clockOut,
-                    "loggedTime":time.getTimeDiff(vm.clockIn, vm.clockOut),
                     "comment":vm.comment
+                }).then(function(success) {
+                    getTimeEntries();
+                    console.log(success);
+                }, function(error) {
+                    console.log(error);
+                })
+                
+                getTimeEntries();
+                
+                // Reset clockIn and clockOut times to the current time
+                vm.clockIn = moment();
+                vm.clockOut = moment();
+                
+                // Clear comment field
+                vm.comment = '';
+                
+                // Deselect the user
+                vm.timeEntryUser = '';
+
+            }
+            
+            vm.updateTimeEntry = function(timeentry) {
+                // Collect data that will be passed to the updateTime method
+                var updateTimeEntry = {
+                    "id":timeentry.id,
+                    "user_id":timeentry.user.id,
+                    "start_time":timeentry.start_time,
+                    "end_time":timeentry.end_time,
+                    "comment":timeentry.comment
+                }
+                
+                // Update the time entry and then refresh the list
+                time.updateTime(updateTimeEntry).then(function(success) {
+                    getTimeEntries();
+                    $scope.showEditDialog = false;
+                    console.log(success);
+                }, function(error) {
+                    console.log(error);
                 });
-
-                updateTotalTime(vm.timeentries);
-
-                vm.comment = "";
+            }
+            
+            // Specify the time entry to be deleted and pass it to the deleteTime method on the time service
+            vm.deleteTimeEntry = function(timeentry) {
+                var id = timeentry.id;
+                
+                time.deleteTime(id).then(function(success) {
+                    getTimeEntries();
+                    console.log(success);
+                }, function(error) {
+                    console.log(error);
+                });
             }
             
         }

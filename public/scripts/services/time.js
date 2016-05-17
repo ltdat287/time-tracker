@@ -57,12 +57,40 @@
 
             }
 
-            // Grab data passed from 
+            // Grab data passed from the view and send a POST request to the api to save the data
+            function saveTime(data) {
+                return Time.save(data).$promise.then(function(success) {
+                    console.log(success); 
+                }, function(error) {
+                    console.log(error);
+                });
+            }
+            
+            // Use a PUT request to save the updated data passed in
+            function updateTime(data) {
+                return Time.update({id:data.id}, data).$promise.then(function(success) {
+                    console.log(success);
+                }, function(error) {
+                    console.log(error);
+                });
+            }
+            
+            // Send a delete request for a specific time entry
+            function deleteTime(id) {
+                return Time.delete({id:id}).$promise.then(function(success) {
+                    console.log(success);
+                }, function(error) {
+                    console.log(error);
+                })
+            }
 
             return {
                 getTime: getTime,
                 getTimeDiff: getTimeDiff,
-                getTotalTime: getTotalTime
+                getTotalTime: getTotalTime,
+                saveTime: saveTime,
+                updateTime: updateTime,
+                deleteTime: deleteTime
             }
         }
             
