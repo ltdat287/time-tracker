@@ -40,7 +40,15 @@ class TimeEntriesController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->all();
+
+        dd($data);
+
+        $time_entries = new TimeEntries();
+
+        $time_entries->fill($data);
+
+        $time_entries->save();
     }
 
     /**

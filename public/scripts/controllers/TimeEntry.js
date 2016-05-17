@@ -6,27 +6,44 @@
         .module('timeTracker')
         .controller('TimeEntry', TimeEntry);
 
-        function TimeEntry(time) {
+        function TimeEntry(time, user, $scope) {
 
             // vm is our capture variable
             var vm = this;
 
             vm.timeentries = [];
-
             vm.totalTime = {};
+            vm.users = [];
 
             // Initialize the clockIn and clockOut times to the current time.
-            vm.clockIn = new Date();
-            vm.clockOut = new Date();
+            vm.clockIn = moment();
+            vm.clockOut = moment();
+
+            // Grab all the time entries saved in the database
+            getTimeEntries();
+
+            // Get the users from the database so we can select who the time entry belongs to
+            getUsers();
+
+            function getUsers() {
+                user.getUsers().then(function(result) {
+                    vm.users = result;
+                }, function(error) {
+                    console.log(error);
+                });
+            }
 
             // Fetches the time entries from the static JSON file
             // and puts the results on the vm.timeentries 
-            time.getTime().then(function(results) {
-            	vm.timeentries = results;
-            	updateTotalTime(vm.timeentries);
-            }, function(error) {
-            	console.log(error);
-            });
+            function getTimeEntries() {
+                time.getTime().then(function(results) {
+                    vm.timeentries = results;
+                    updateTotalTime(vm.timeentries);
+                    console.log(vm.timeentries);
+                }, function(error) {
+                    console.log(error);
+                });
+            }
 
             // Update the values in the total time box by calling the getTotalTime method on the time service
             function updateTotalTime(timeentries) {
@@ -59,7 +76,7 @@
 
                 updateTotalTime(vm.timeentries);
 
-                // vm.comment = "";
+                vm.comment = "";
             }
             
         }
