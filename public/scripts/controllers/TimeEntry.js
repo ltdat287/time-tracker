@@ -104,6 +104,7 @@
                 
                 // Update the time entry and then refresh the list
                 time.updateTime(updateTimeEntry).then(function(success) {
+                    toaster.pop('success', "Notice", "Sửa dữ liệu thành công");
                     getTimeEntries();
                     $scope.showEditDialog = false;
                     console.log(success);
