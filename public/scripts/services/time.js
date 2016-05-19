@@ -38,7 +38,7 @@
 
                 return {
                     duration: duration
-                }
+                };
             }
 
             // Add up the total time for all of our time entries
@@ -53,7 +53,7 @@
                 return {
                     hours: Math.floor(moment.duration(totalMilliseconds).asHours()),
                     minutes: moment.duration(totalMilliseconds).minutes()
-                }
+                };
 
             }
 
@@ -81,7 +81,7 @@
                     console.log(success);
                 }, function(error) {
                     console.log(error);
-                })
+                });
             }
 
             return {
@@ -91,7 +91,7 @@
                 saveTime: saveTime,
                 updateTime: updateTime,
                 deleteTime: deleteTime
-            }
+            };
         }
             
 })();

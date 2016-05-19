@@ -76,7 +76,7 @@
                     console.log(success);
                 }, function(error) {
                     console.log(error);
-                })
+                });
                 
                 getTimeEntries();
                 
@@ -90,7 +90,7 @@
                 // Deselect the user
                 vm.timeEntryUser = '';
 
-            }
+            };
             
             vm.updateTimeEntry = function(timeentry) {
                 // Collect data that will be passed to the updateTime method
@@ -100,7 +100,7 @@
                     "start_time":timeentry.start_time,
                     "end_time":timeentry.end_time,
                     "comment":timeentry.comment
-                }
+                };
                 
                 // Update the time entry and then refresh the list
                 time.updateTime(updateTimeEntry).then(function(success) {
@@ -111,7 +111,7 @@
                 }, function(error) {
                     console.log(error);
                 });
-            }
+            };
             
             // Specify the time entry to be deleted and pass it to the deleteTime method on the time service
             vm.deleteTimeEntry = function(timeentry) {
@@ -128,7 +128,7 @@
                     });
                 });
                 
-            }
+            };
             
         }
 })();

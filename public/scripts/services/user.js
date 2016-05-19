@@ -17,12 +17,12 @@
 					return results;
 				}, function(error) {
 					console.log(error);
-				})
+				});
 			}
 
 			return {
 				getUsers: getUsers
-			}
+			};
 			
 		}
 
