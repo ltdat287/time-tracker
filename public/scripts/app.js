@@ -4,7 +4,10 @@
 	angular
 		.module('timeTracker', [
 			'ngResource',
-			'ui.bootstrap'
+			'ui.bootstrap',
+			'angular-confirm',
+			'toaster',
+			'ngAnimate'
 		]);
 
 })();

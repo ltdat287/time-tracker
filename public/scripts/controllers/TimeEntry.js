@@ -6,7 +6,7 @@
         .module('timeTracker')
         .controller('TimeEntry', TimeEntry);
 
-        function TimeEntry(time, user, $scope) {
+        function TimeEntry(time, user, $scope, $confirm, toaster) {
 
             // vm is our capture variable
             var vm = this;
@@ -54,13 +54,13 @@
             vm.logNewTime = function() {
                 // Make sure that the clock-in time isn't after the clock-out time
                 if (vm.clockOut < vm.clockIn) {
-                    alert("You can't clock out before you clock in!");
+                    toaster.pop('error', "Notice", "You can't clock out before you clock in!");
                     return;
                 }
 
                 // Make sure the time entry is greater than zero!
                 if (vm.clockOut - vm.clockIn === 0) {
-                    alert('Your time entry has to be greater than zero!');
+                    toaster.pop('error', "Notice", "Your time entry has to be greater than zero!");
                     return;
                 }
 
@@ -71,6 +71,7 @@
                     "end_time":vm.clockOut,
                     "comment":vm.comment
                 }).then(function(success) {
+                    toaster.pop('success', "Notice", "Thêm dữ liệu thành công");
                     getTimeEntries();
                     console.log(success);
                 }, function(error) {
@@ -115,12 +116,17 @@
             vm.deleteTimeEntry = function(timeentry) {
                 var id = timeentry.id;
                 
-                time.deleteTime(id).then(function(success) {
-                    getTimeEntries();
-                    console.log(success);
-                }, function(error) {
-                    console.log(error);
+                $confirm({text: 'Are you sure you want to delete?', title: 'Delete it', ok: 'Yes', cancel: 'No'})
+                .then(function() {
+                    time.deleteTime(id).then(function(success) {
+                        toaster.pop('info', "Notice", "Xóa dữ liệu thành công");
+                        getTimeEntries();
+                        console.log(success);
+                    }, function(error) {
+                        console.log(error);
+                    });
                 });
+                
             }
             
         }

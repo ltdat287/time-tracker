@@ -2,8 +2,9 @@
 <html>
 <head>
     <title>Time Tracker</title>
-    <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css">
+    <link rel="stylesheet" href="bower_components/AngularJS-Toaster/toaster.css">
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body ng-app="timeTracker" ng-controller="TimeEntry as vm">
 
@@ -35,6 +36,9 @@
             </div>    
         </div>
     </nav>
+
+    <!--Show notification Toaster-->
+    <toaster-container toaster-options="{'time-out': 3000}"></toaster-container>
 
     <div class="container">
     <div class="col-sm-8">
@@ -95,7 +99,10 @@
     <script type="text/javascript" src="bower_components/angular/angular.js"></script>
     <script type="text/javascript" src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
     <script type="text/javascript" src="bower_components/angular-resource/angular-resource.js"></script>
+    <script type="text/javascript" src="bower_components/angular-confirm-modal/angular-confirm.js"></script>
+    <script type="text/javascript" src="bower_components/angular-animate/angular-animate.js"></script>
     <script type="text/javascript" src="bower_components/moment/moment.js"></script>
+    <script type="text/javascript" src="bower_components/AngularJS-Toaster/toaster.js"></script>
 
     <!-- Application Scripts -->
     <script type="text/javascript" src="scripts/app.js"></script>
