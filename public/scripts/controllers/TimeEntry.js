@@ -15,9 +15,11 @@
             vm.totalTime = {};
             vm.users = [];
 
-            // Initialize the clockIn and clockOut times to the current time.
-            vm.clockIn = moment();
-            vm.clockOut = moment();
+            // Initialize the clockIn and clockOut times to the current time ceil 10.
+            var now = Date.now();
+            var now_ceil = Math.ceil( now / 600000 ) * 600000;
+            vm.clockIn = moment(now_ceil);
+            vm.clockOut = moment(now_ceil);
 
             // Grab all the time entries saved in the database
             getTimeEntries();
