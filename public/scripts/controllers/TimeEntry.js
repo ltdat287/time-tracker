@@ -21,6 +21,16 @@
             vm.clockIn = moment(now_ceil);
             vm.clockOut = moment(now_ceil);
 
+            vm.dateIn = new Date(vm.clockIn.format());
+            vm.dateOut = new Date(vm.clockOut.format());
+
+            vm.openDateIn = function() {
+                $scope.popup1 = true;
+            };
+            vm.openDateOut = function() {
+                $scope.popup2 = true;
+            };
+
             // Grab all the time entries saved in the database
             getTimeEntries();
 
@@ -54,14 +64,15 @@
 
             // Submits the time entry that will be called when we click the "Log Time" button
             vm.logNewTime = function() {
+              
                 // Make sure that the clock-in time isn't after the clock-out time
-                if (vm.clockOut < vm.clockIn) {
+                if ((vm.dateOut.getTime() < vm.dateIn.getTime())) {
                     toaster.pop('error', "Notice", "You can't clock out before you clock in!");
                     return;
                 }
 
                 // Make sure the time entry is greater than zero!
-                if (vm.clockOut - vm.clockIn === 0) {
+                if (vm.dateOut.getTime() - vm.dateIn.getTime() === 0) {
                     toaster.pop('error', "Notice", "Your time entry has to be greater than zero!");
                     return;
                 }
@@ -69,8 +80,8 @@
                 // Call method saveTime on the time service to save the new time entry to the database
                 time.saveTime({
                     "user_id":vm.timeEntryUser.id,
-                    "start_time":vm.clockIn,
-                    "end_time":vm.clockOut,
+                    "start_time":vm.dateIn,
+                    "end_time":vm.dateOut,
                     "comment":vm.comment
                 }).then(function(success) {
                     toaster.pop('success', "Notice", "Thêm dữ liệu thành công");
@@ -82,10 +93,13 @@
                 
                 getTimeEntries();
                 
-                // Reset clockIn and clockOut times to the current time
-                vm.clockIn = moment();
-                vm.clockOut = moment();
-                
+                // Reset clockIn and clockOut, datein, dateOut times to the current time
+                vm.clockIn = moment(now_ceil);
+                vm.clockOut = moment(now_ceil);
+
+                vm.dateIn = new Date(vm.clockIn.format());
+                vm.dateOut = new Date(vm.clockOut.format());
+
                 // Clear comment field
                 vm.comment = '';
                 
